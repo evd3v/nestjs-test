@@ -8,8 +8,8 @@ class Post {
   @Column()
   public title: string;
 
-  // @Column()
-  // public content: string;
+  @Column()
+  public content: string;
 }
 
 export default Post;
