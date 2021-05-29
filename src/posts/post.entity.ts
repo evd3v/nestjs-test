@@ -1,6 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  RelationId,
+} from 'typeorm';
+import User from '../users/user.entity';
+import Category from '../categories/category.entity';
 
-@Entity({ name: 'Post' })
+@Entity()
 class Post {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -8,8 +18,18 @@ class Post {
   @Column()
   public title: string;
 
+  @Column({ nullable: true })
+  public category?: string;
+
   @Column()
   public content: string;
+
+  @ManyToOne(() => User, (author: User) => author.posts)
+  public author: User;
+
+  @ManyToMany(() => Category)
+  @JoinTable()
+  public categories: Category[];
 }
 
 export default Post;
