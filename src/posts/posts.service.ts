@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Post } from './post.interface';
 import { UpdatePostDto } from './dto/updatePost.dto';
 import { CreatePostDto } from './dto/createPost.dto';
+import { PostNotFoundException } from './exception/postNotFound.exception';
 
 @Injectable()
 export class PostsService {
@@ -17,7 +18,7 @@ export class PostsService {
     if (post) {
       return post;
     }
-    throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
+    throw new PostNotFoundException(id);
   }
 
   replacePost(id: number, post: UpdatePostDto) {
